@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  react-app:
+    restart: always
+    volumes:
+      - /usr/app/node_modules
+      - .:/usr/app
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - '8080:8080'
