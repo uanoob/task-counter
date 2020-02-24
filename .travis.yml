@@ -1,0 +1,18 @@
+os: linux
+language: node_js
+node_js:
+  - lts/*
+services:
+  - docker
+before_install:
+  - docker build -t uanoob/react-test -f ./client/Dockerfile.dev ./client
+script:
+  - docker run -e CI=true uanoob/react-test npm run test
+after_success:
+  - docker build -t uanoob/task-counter-client ./client
+  - docker build -t uanoob/task-counter-nginx ./nginx
+  # Login to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Take those images and push them to docker hub
+  - docker push uanoob/task-counter-client
+  - docker push uanoob/task-counter-nginx
