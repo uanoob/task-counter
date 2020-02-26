@@ -1,0 +1,14 @@
+.tracker-header {
+  width: 100%;
+  margin: 86px 0px 88px 0;
+  text-align: center;
+  font-family: PTSans-Bold, AdobeInvisFont, MyriadPro-Regular;
+  font-size: 48px;
+  color: rgba(0, 0, 0, 255);
+}
+@media only screen and (max-width: 425px) {
+  .tracker-header {
+    margin: 66px 0px 63px 0;
+    font-size: 38px;
+  }
+}
