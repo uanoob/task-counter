@@ -1,16 +1,44 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import * as actions from '../../store/trackers';
 import TrackerItem from '../item/TrackerItem';
 import Styles from './styles';
 
-const TrackerList = () => (
-  <Styles>
-    <ul className='tracker-list'>
-      <TrackerItem active />
-      <TrackerItem />
-      <TrackerItem active />
-      <TrackerItem />
-    </ul>
-  </Styles>
-);
+const TrackerList = ({ fetchTrackers, removeTracker, trackers }) => {
+  useEffect(() => {
+    fetchTrackers();
+  }, [fetchTrackers]);
+  return (
+    <Styles empty={trackers.length === 0}>
+      <ul className='tracker-list'>
+        {trackers.map(tracker => (
+          <TrackerItem
+            key={tracker.id}
+            onRemoveTracker={removeTracker}
+            tracker={tracker}
+          />
+        ))}
+      </ul>
+    </Styles>
+  );
+};
 
-export default TrackerList;
+const mapStateToProps = state => ({
+  trackers: state.trackers.data,
+});
+
+TrackerList.propTypes = {
+  fetchTrackers: PropTypes.func.isRequired,
+  removeTracker: PropTypes.func.isRequired,
+  trackers: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      active: PropTypes.bool.isRequired,
+      created: PropTypes.number.isRequired,
+    }),
+  ).isRequired,
+};
+
+export default connect(mapStateToProps, actions)(TrackerList);

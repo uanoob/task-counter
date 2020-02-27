@@ -6,6 +6,6 @@ export default styled.div`
     margin: 0;
     padding: 0;
     list-style: none;
-    border-top: 1px solid #7f7f7f;
+    border-top: ${props => (props.empty ? 'none' : '1px solid #7f7f7f')};
   }
 `;

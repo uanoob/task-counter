@@ -29,6 +29,11 @@ export default styled.div`
     background-size: cover;
     background-repeat: no-repeat;
     background-color: transparent;
+    border: none;
+    outline: none;
+  }
+  .icon:hover {
+    cursor: pointer;
   }
   .tracker-actions {
     display: flex;
