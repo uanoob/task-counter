@@ -22,6 +22,7 @@ const TrackerInput = ({ addTracker }) => {
       name: trackerName,
       active: true,
       created: Date.now(),
+      accumulate: 0,
     };
     addTracker(data);
     handleClear();

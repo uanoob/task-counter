@@ -5,10 +5,27 @@ import * as actions from '../../store/trackers';
 import TrackerItem from '../item/TrackerItem';
 import Styles from './styles';
 
-const TrackerList = ({ fetchTrackers, removeTracker, trackers }) => {
+const TrackerList = ({
+  fetchTrackers,
+  removeTracker,
+  updateTracker,
+  trackers,
+}) => {
   useEffect(() => {
     fetchTrackers();
   }, [fetchTrackers]);
+  const handleUpdateTracker = tracker => {
+    const now = !tracker.active ? tracker.created : Date.now();
+    const acc = now - tracker.created + tracker.accumulate;
+    const data = {
+      id: tracker.id,
+      name: tracker.name,
+      active: !tracker.active,
+      created: tracker.active ? tracker.created : Date.now(),
+      accumulate: acc,
+    };
+    updateTracker(data);
+  };
   return (
     <Styles empty={trackers.length === 0}>
       <ul className='tracker-list'>
@@ -16,6 +33,7 @@ const TrackerList = ({ fetchTrackers, removeTracker, trackers }) => {
           <TrackerItem
             key={tracker.id}
             onRemoveTracker={removeTracker}
+            onUpdateTracker={handleUpdateTracker}
             tracker={tracker}
           />
         ))}
@@ -31,6 +49,7 @@ const mapStateToProps = state => ({
 TrackerList.propTypes = {
   fetchTrackers: PropTypes.func.isRequired,
   removeTracker: PropTypes.func.isRequired,
+  updateTracker: PropTypes.func.isRequired,
   trackers: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,

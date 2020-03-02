@@ -1,1 +1,6 @@
-export { fetchTrackers, addTracker, removeTracker } from './actions';
+export {
+  fetchTrackers,
+  addTracker,
+  removeTracker,
+  updateTracker,
+} from './actions';

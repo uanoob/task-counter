@@ -2,6 +2,7 @@ import {
   FETCH_TRACKERS,
   ADD_TRACKER,
   REMOVE_TRACKER,
+  UPDATE_TRACKER,
 } from './types';
 
 const initialState = {
@@ -18,6 +19,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         data: state.data.filter(item => item.id !== action.payload),
+      };
+    case UPDATE_TRACKER:
+      return {
+        ...state,
+        data: state.data.map(item => (item.id === action.payload.id ? action.payload : item)),
       };
     default:
       return state;

@@ -39,9 +39,6 @@ export default styled.div`
     display: flex;
     align-items: center;
   }
-  .tracker-time {
-    margin-right: 29px;
-  }
   .icon-av {
     margin-right: 15px;
     background-image: url(${props => (props.active ? pauseCircle : playCircle)});

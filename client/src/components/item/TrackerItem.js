@@ -1,21 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Styles from './styles';
+import Clock from '../clock/Clock';
 
-const TrackerItem = ({ tracker, onRemoveTracker }) => (
+const TrackerItem = ({ tracker, onRemoveTracker, onUpdateTracker }) => (
   <Styles active={tracker.active}>
     <li className='tracker-item'>
       <span className='tracker-name'>{tracker.name}</span>
       <div className='tracker-actions'>
-        <span className='tracker-time'>
-          {`${new Date(tracker.created).getHours()}:${new Date(
-            tracker.created,
-          ).getMinutes()}`}
-        </span>
+        <Clock tracker={tracker} />
         <button
           type='button'
           aria-label='Start Pause'
           className='icon icon-av'
+          onClick={() => onUpdateTracker(tracker)}
         />
         <button
           type='button'
@@ -30,6 +28,7 @@ const TrackerItem = ({ tracker, onRemoveTracker }) => (
 
 TrackerItem.propTypes = {
   onRemoveTracker: PropTypes.func.isRequired,
+  onUpdateTracker: PropTypes.func.isRequired,
   tracker: PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,

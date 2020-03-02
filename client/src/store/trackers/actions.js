@@ -2,6 +2,7 @@ import {
   ADD_TRACKER,
   REMOVE_TRACKER,
   FETCH_TRACKERS,
+  UPDATE_TRACKER,
 } from './types';
 
 const fetchFromStorage = () => {
@@ -41,5 +42,18 @@ export const removeTracker = id => async dispatch => {
   dispatch({
     type: REMOVE_TRACKER,
     payload: id,
+  });
+};
+
+export const updateTracker = tracker => dispatch => {
+  const response = fetchFromStorage();
+  if (response) {
+    const updated = response.map(item => (item.id === tracker.id ? tracker : item));
+    setStorage([...updated]);
+  }
+
+  dispatch({
+    type: UPDATE_TRACKER,
+    payload: tracker,
   });
 };
